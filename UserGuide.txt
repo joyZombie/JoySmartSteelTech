@@ -1,0 +1,30 @@
+Instructions to use following scripts:
+ - CSVtoDB.py
+ - DBtoAPI.py
+ 
+Both scripts are tested using Python3.6 on Windows7.
+
+CSVtoDB - This script takes task_data.csv as input which in turn should be placed along with CSVtoDB.py. 
+		It then, connects to mongodb-service to create a database(CSVdataDB) and a collection(csvdata).
+		It clears existing data(if any) from csvdata-collection and then uploads new data from task_data.csv.
+Python Dependency: pymongo
+Prequisites: Python3.6 and MongoDB installed and started as a service.
+Execution: 	- Place task_data.csv along with CSVtoDB.py.
+			- python CSVtoDB.py
+
+DBtoAPI - This script starts a web-application with single GET-API to fetch all the data stored in csvdata-collection.
+		It also logs an entry into applogs-collection with a timestamp when each HTTP-GET request is made.
+Python Dependency: pymongo and Flask
+Prequisites: Python3.6 and MongoDB installed and started as a service.
+Execution:	- Windows:	- set FLASK_APP=DBtoAPI.py
+						- flask run
+			- Linux:	- export FLASK_APP=DBtoAPI.py
+						- flask run
+			Use http://localhost:5000/ from any HTTP-client.
+			Expected Output is all the data in csvdata-collection which was indeed populated via task_data.csv.
+			One can also verify data of applogs-collection using mongo-client to see corresponding entries when each GET request was made.
+			
+I used mongodb and Flask for thier simplicity to install and implement.
+However, mongodb is capable enough to handle highly scalable data but for smaller projects also, its quite easy to setup and serve the purpose.
+I've got prior experience with Flask and I find it fairly fast enough to launch a web-application with minimum coding. 
+
